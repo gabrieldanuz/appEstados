@@ -1,24 +1,24 @@
-import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
-import { Botao } from './src/components/Botao'
-import { BotaoC } from './src/components/BotaoC'
+import React, { useEffect, useState } from 'react'
+import { View } from 'react-native'
+import { api } from './src/services/api'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Botao />
-      <Botao />
-      <Botao />
-      <Botao />
-    </View>
-  )
+interface Estado {
+  id: number
+  nome: string
+  sigla: string
+  regiao: string
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+export default function App() {
+  const [estados, setEstados] = useState<Estado[]>([])
+
+  async function carregaEstados() {
+    const response = await api.get('?orderBy=nome')
   }
-})
+
+  useEffect(() => {
+    carregaEstados()
+  }, [])
+
+  return <View></View>
+}
