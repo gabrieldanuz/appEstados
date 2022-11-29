@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, View, Text, StyleSheet } from 'react-native'
+import {
+  FlatList,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native'
 import { api } from '../services/api'
+import { useNavigation } from '@react-navigation/native'
 
-interface Estado {
+export interface Estado {
   id: number
   nome: string
   sigla: string
@@ -11,10 +18,15 @@ interface Estado {
 
 export function Home() {
   const [estados, setEstados] = useState<Estado[]>([])
+  const navigation = useNavigation()
 
   async function carregaEstados() {
     const response = await api.get('?orderBy=nome')
     setEstados(response.data)
+  }
+
+  function handleToMunicipio(item: Estado) {
+    navigation.navigate('Municipio', { estado: item })
   }
 
   useEffect(() => {
@@ -30,13 +42,16 @@ export function Home() {
         keyExtractor={estado => String(estado.id)}
         renderItem={({ item }) => {
           return (
-            <View style={styles.itemEstado}>
+            <TouchableOpacity
+              onPress={() => handleToMunicipio(item)}
+              style={styles.itemEstado}
+            >
               <View style={styles.avatarSigla}>
                 <Text style={styles.sigla}>{item.sigla}</Text>
               </View>
 
               <Text style={styles.estado}>{item.nome}</Text>
-            </View>
+            </TouchableOpacity>
           )
         }}
       ></FlatList>
