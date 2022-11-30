@@ -2,8 +2,8 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 
-import { Home } from './src/components/Home'
-import { Municipio } from './src/components/Municipio'
+import { Home } from './src/pages/Home'
+import { Municipio } from './src/pages/Municipio'
 
 const Stack = createStackNavigator()
 

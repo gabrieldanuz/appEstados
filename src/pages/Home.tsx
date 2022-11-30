@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import { api } from '../services/api'
 import { useNavigation } from '@react-navigation/native'
+import { ItemEstado } from '../components/ItemEstado'
 
 export interface Estado {
   id: number
@@ -40,20 +41,9 @@ export function Home() {
         showsVerticalScrollIndicator={false}
         data={estados}
         keyExtractor={estado => String(estado.id)}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity
-              onPress={() => handleToMunicipio(item)}
-              style={styles.itemEstado}
-            >
-              <View style={styles.avatarSigla}>
-                <Text style={styles.sigla}>{item.sigla}</Text>
-              </View>
-
-              <Text style={styles.estado}>{item.nome}</Text>
-            </TouchableOpacity>
-          )
-        }}
+        renderItem={({ item }) => (
+          <ItemEstado item={item} onPress={() => handleToMunicipio(item)} />
+        )}
       ></FlatList>
     </View>
   )
@@ -65,32 +55,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEEEEE',
     padding: 20,
     justifyContent: 'center'
-  },
-  itemEstado: {
-    paddingVertical: 10,
-    marginTop: 5,
-    backgroundColor: '#FFF',
-    flexDirection: 'row',
-    borderRadius: 10
-  },
-  avatarSigla: {
-    width: 60,
-    height: 60,
-    backgroundColor: '#E76F51',
-    borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 10
-  },
-  sigla: {
-    fontSize: 20,
-    color: 'white'
-  },
-  estado: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#264653',
-    marginLeft: 10,
-    alignSelf: 'center'
   }
 })
